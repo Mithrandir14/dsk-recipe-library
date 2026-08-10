@@ -27,6 +27,7 @@
    ========================================================================== */
 
 @import url("et-book-fonts.css");
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400&display=swap");
 
 :root {
     --tufte-bg:         #fbf8ef;
@@ -48,12 +49,13 @@
     --tufte-tag-teal:  #1f5f5b;
     --tufte-tag-rust:  #784a30;
 
-    /* ETBembo first (system font, installed from the vault's own et-book
-       faces), then the embedded et-book webfont (same typeface, works for
-       any visitor without it installed), then print/system serif. */
-    --tufte-font-text: "ETBembo", "et-book", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
-    --tufte-font-ui:   "Gill Sans", "Gill Sans MT", "Seravek", "Trebuchet MS", Calibri, sans-serif;
-    --tufte-font-mono: "Consolas", "Liberation Mono", Menlo, Courier, monospace;
+    /* Body copy is Lato — traditional and legible, not techy. The Tufte
+       serif (ETBembo/et-book) is reserved for the page/recipe title (h1)
+       only, via --tufte-font-title. */
+    --tufte-font-text:  "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --tufte-font-title: "ETBembo", "et-book", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+    --tufte-font-ui:    "Gill Sans", "Gill Sans MT", "Seravek", "Trebuchet MS", Calibri, sans-serif;
+    --tufte-font-mono:  "Consolas", "Liberation Mono", Menlo, Courier, monospace;
 }
 
 html.dark {
@@ -93,13 +95,21 @@ html.dark body {
     background-color: var(--tufte-bg) !important;
 }
 
+/* No underline by default — headings, cards, and nav are wrapped in <a>
+   tags by the generator, so a blanket underline reads as noise rather than
+   signaling "this is a link." Underline is added back explicitly for
+   links inside body prose (recipe notes, footer, breadcrumb). */
 a {
     color: var(--tufte-link);
-    text-decoration: underline;
+    text-decoration: none;
 }
 
 a:hover {
     color: var(--tufte-accent);
+}
+
+.prose a, footer a {
+    text-decoration: underline;
 }
 
 /* Squash Tailwind's paper/panel/border palette onto the two Tufte surfaces */
@@ -112,7 +122,7 @@ html.dark .bg-gray-700 {
     background-color: var(--tufte-bg-alt) !important;
 }
 
-.bg-gray-200,
+.bg-gray-200, .bg-purple-50, .hover\:bg-purple-50:hover,
 html.dark .bg-gray-200 {
     background-color: transparent !important;
 }
@@ -162,10 +172,11 @@ html.dark .text-gray-500, html.dark .text-gray-400 {
     color: var(--tufte-faint) !important;
 }
 
-.text-orange-600, .text-orange-700, .text-purple-600, .text-blue-600,
-.text-green-600, .text-red-500, .text-yellow-400,
+.text-orange-600, .text-orange-700, .text-purple-600, .text-purple-700,
+.text-blue-600, .text-green-600, .text-red-500, .text-red-700, .text-yellow-400,
 html.dark .text-orange-600, html.dark .text-orange-700,
-html.dark .text-purple-600, html.dark .text-green-600, html.dark .text-red-500 {
+html.dark .text-purple-600, html.dark .text-purple-700,
+html.dark .text-green-600, html.dark .text-red-500, html.dark .text-red-700 {
     color: var(--tufte-accent) !important;
 }
 
@@ -197,6 +208,7 @@ h1.bg-gradient-to-r, h1 .bg-gradient-to-r,
 }
 
 h1 {
+    font-family: var(--tufte-font-title);
     font-size: 2.1em;
     border-bottom: 1px solid var(--tufte-rule);
     padding-bottom: 0.25em;
@@ -231,6 +243,24 @@ h2.text-orange-600, h2.text-green-600, h2.text-blue-600 {
 nav.bg-white {
     background-color: var(--tufte-bg) !important;
     border-bottom: 1px solid var(--tufte-rule);
+}
+
+/* The generator's CookLang mascot icon reads as app chrome, not a
+   masthead — drop it rather than re-skin it. */
+nav img[src*="android-chrome"] {
+    display: none !important;
+}
+
+/* Keep the search field modest rather than letting it dominate the bar */
+#search-container {
+    flex: initial !important;
+    width: 100% !important;
+}
+
+@media (min-width: 768px) {
+    #search-container {
+        max-width: 22em;
+    }
 }
 
 .nav-pill {
