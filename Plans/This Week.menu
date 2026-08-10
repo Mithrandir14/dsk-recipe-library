@@ -1,0 +1,47 @@
+---
+servings: 2
+description: |
+    3-day starter plan built from your Kickstart pack. Swap anything —
+    each line points at a recipe in this pack; add days or your own recipes.
+---
+
+== Day 1 (2026-08-08) ==
+
+Breakfast: \
+- @./Breakfast/Appam{}
+
+Lunch: \
+- @./Lunch/Khichdi{}
+
+Dinner: \
+- @./Dinner/Instant Pot Risotto{2%servings} \
+- @./Sides & Drinks/Quick Wrap{}
+
+== Day 2 (2026-08-09) ==
+
+Breakfast: \
+- @./Breakfast/Breakfast Gorditas{2%servings}
+
+Lunch: \
+- @./Lunch/Pinto Bean Tacos{}
+
+Dinner: \
+- @./Dinner/Black Bean Tacos{2%servings} \
+- @./Sides & Drinks/Chapati{}
+
+== Day 3 (2026-08-10) ==
+
+Breakfast: \
+- @./Breakfast/Vegan Hummus Toast{}
+
+Lunch: \
+- @./Lunch/Ras El Hanout Pasta 1{}
+
+Dinner: \
+- @./Dinner/Spinach Calzone{} \
+- @./Sides & Drinks/Roti{}
+
+== Snacks ==
+
+- @./Snack/Fried Paneer{} \
+- @./Snack/Tortellini Skewers{2%servings}

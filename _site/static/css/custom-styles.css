@@ -1,0 +1,536 @@
+/* ==========================================================================
+   Tufte theme, ported from the Obsidian vault (.obsidian/themes/Tufte).
+
+   `cook build web` bakes its own default content into
+   _site/static/css/custom-styles.css on every run (it ships embedded in the
+   CLI binary — there's no config hook to override it), so this source file
+   lives outside _site and rebuild-site.sh copies it (and et-book-fonts.css)
+   into place after each build. Run ./rebuild-site.sh instead of
+   `cook build web` directly.
+
+   Two deliberate departures from the vault's exact values, per feedback on
+   the first pass — the vault stays the source of truth for the palette and
+   font stack, but this file leans harder into the print-Tufte restraint
+   that inspired it than the Obsidian theme's own UI needs called for:
+
+   - Headings are roman, not italic. The Obsidian theme italicizes h1-h6
+     (--h1-style etc.) because in a note-taking UI the H1 doubles as a
+     section divider and italic reads as "structural." Tufte's own book and
+     tufte-css reserve italics for emphasis, epigraphs, and captions —
+     titles and section labels are roman. On a recipe page, "Ingredients"
+     as a section label is closer to that second case.
+   - --tufte-accent (the Tufte red) is spent only where the vault itself
+     spends it: links on hover, tags, focus rings — never on headings,
+     step numbers, or section labels. Grounds for this are in the vault's
+     own comments (theme.css, of --collapse-icon-color-collapsed: "red
+     spent on a routine state" is explicitly what the palette avoids).
+   ========================================================================== */
+
+@import url("et-book-fonts.css");
+
+:root {
+    --tufte-bg:         #fbf8ef;
+    --tufte-bg-alt:     #f3efe1;
+    --tufte-ink:        #111111;
+    --tufte-muted:      #555555;
+    --tufte-muted-warm: #6d6755;
+    --tufte-faint:      #6f6f6f;
+    --tufte-rule:       #cfc9b8;
+    --tufte-accent:     #a00000;
+    --tufte-link:       #1a1a1a;
+    --tufte-code-bg:    #f0f0e8;
+    --tufte-mark:       rgba(213, 106, 118, 0.20);
+
+    --tufte-tag-slate: #2d4a63;
+    --tufte-tag-moss:  #35603f;
+    --tufte-tag-ochre: #6b5a26;
+    --tufte-tag-plum:  #5b3a6b;
+    --tufte-tag-teal:  #1f5f5b;
+    --tufte-tag-rust:  #784a30;
+
+    /* ETBembo first (system font, installed from the vault's own et-book
+       faces), then the embedded et-book webfont (same typeface, works for
+       any visitor without it installed), then print/system serif. */
+    --tufte-font-text: "ETBembo", "et-book", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+    --tufte-font-ui:   "Gill Sans", "Gill Sans MT", "Seravek", "Trebuchet MS", Calibri, sans-serif;
+    --tufte-font-mono: "Consolas", "Liberation Mono", Menlo, Courier, monospace;
+}
+
+html.dark {
+    --tufte-bg:         #151515;
+    --tufte-bg-alt:     #1c1c1c;
+    --tufte-ink:        #e8e6d9;
+    --tufte-muted:      #a59f8c;
+    --tufte-muted-warm: #a59f8c;
+    --tufte-faint:      #908b7a;
+    --tufte-rule:       #3a3a36;
+    --tufte-accent:     #d97474;
+    --tufte-link:       #e8e6d9;
+    --tufte-code-bg:    #232320;
+    --tufte-mark:       rgba(213, 106, 118, 0.15);
+
+    --tufte-tag-slate: #8fb4d1;
+    --tufte-tag-moss:  #8fbf95;
+    --tufte-tag-ochre: #c9b077;
+    --tufte-tag-plum:  #b299c4;
+    --tufte-tag-teal:  #7fc2bc;
+    --tufte-tag-rust:  #c99b7d;
+}
+
+/* --------------------------------------------------------------------------
+   Base
+   -------------------------------------------------------------------------- */
+
+body {
+    background-color: var(--tufte-bg) !important;
+    color: var(--tufte-ink) !important;
+    font-family: var(--tufte-font-text) !important;
+    font-size: 17px;
+    line-height: 1.5;
+}
+
+html.dark body {
+    background-color: var(--tufte-bg) !important;
+}
+
+a {
+    color: var(--tufte-link);
+    text-decoration: underline;
+}
+
+a:hover {
+    color: var(--tufte-accent);
+}
+
+/* Squash Tailwind's paper/panel/border palette onto the two Tufte surfaces */
+.bg-white,
+.bg-gray-50,
+.bg-gray-100,
+html.dark .bg-white,
+html.dark .bg-gray-800,
+html.dark .bg-gray-700 {
+    background-color: var(--tufte-bg-alt) !important;
+}
+
+.bg-gray-200,
+html.dark .bg-gray-200 {
+    background-color: transparent !important;
+}
+
+.border-gray-100, .border-gray-200, .border-gray-300,
+.border-purple-200, .border-orange-300, .border-blue-400,
+.border-t, .border-l-2, .border-l-4,
+html.dark .border-gray-600, html.dark .border-gray-700,
+html.dark .border-purple-200, html.dark .border-indigo-200,
+html.dark .border-green-200, html.dark .border-orange-200 {
+    border-color: var(--tufte-rule) !important;
+}
+
+/* No rounded corners, no drop shadows, anywhere — Tufte is a page, not a UI kit */
+.rounded-2xl, .rounded-xl, .rounded-lg, .rounded-md, .rounded-full,
+img.rounded-md {
+    border-radius: 0 !important;
+}
+
+.shadow-lg, .shadow-md, .shadow-xl, .hover\:shadow-xl:hover,
+.search-input:focus, #search-input:focus {
+    box-shadow: none !important;
+}
+
+/* Kill every gradient the generator paints in; flat surfaces only */
+.bg-gradient-to-r, .bg-gradient-to-br,
+html.dark .bg-gradient-to-r {
+    background-image: none !important;
+}
+
+/* --------------------------------------------------------------------------
+   Text colors
+   -------------------------------------------------------------------------- */
+
+.text-gray-900, .text-gray-800, .text-gray-700,
+html.dark .text-gray-900, html.dark .text-gray-800, html.dark .text-gray-700 {
+    color: var(--tufte-ink) !important;
+}
+
+.text-gray-600,
+html.dark .text-gray-600 {
+    color: var(--tufte-muted) !important;
+}
+
+.text-gray-500, .text-gray-400, .text-purple-400,
+html.dark .text-gray-500, html.dark .text-gray-400 {
+    color: var(--tufte-faint) !important;
+}
+
+.text-orange-600, .text-orange-700, .text-purple-600, .text-blue-600,
+.text-green-600, .text-red-500, .text-yellow-400,
+html.dark .text-orange-600, html.dark .text-orange-700,
+html.dark .text-purple-600, html.dark .text-green-600, html.dark .text-red-500 {
+    color: var(--tufte-accent) !important;
+}
+
+.text-white,
+html.dark .text-white {
+    color: var(--tufte-bg) !important;
+}
+
+/* --------------------------------------------------------------------------
+   Headings — roman serif, ink, no gradient/clip-text titles.
+   Italics are reserved for prep notes and the recipe's closing note (see
+   below), not spent on structural headings.
+   -------------------------------------------------------------------------- */
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--tufte-font-text);
+    font-weight: 400;
+    font-style: normal;
+    color: var(--tufte-ink) !important;
+}
+
+h1.bg-gradient-to-r, h1 .bg-gradient-to-r,
+.text-transparent, .bg-clip-text {
+    background: none !important;
+    -webkit-background-clip: unset !important;
+    background-clip: unset !important;
+    -webkit-text-fill-color: var(--tufte-ink) !important;
+    color: var(--tufte-ink) !important;
+}
+
+h1 {
+    font-size: 2.1em;
+    border-bottom: 1px solid var(--tufte-rule);
+    padding-bottom: 0.25em;
+}
+
+/* Recipe section labels ("Ingredients", "Cookware") read as UI chrome
+   rather than body prose, so they take the vault's Gill Sans / small-caps
+   treatment (--metadata-label-font) instead of the serif body font. */
+h2 {
+    font-family: var(--tufte-font-ui);
+    font-size: 1em;
+    font-weight: 600;
+    font-variant: small-caps;
+    letter-spacing: 0.04em;
+    color: var(--tufte-ink) !important;
+    border-bottom: 1px solid var(--tufte-rule);
+    padding-bottom: 0.4em;
+}
+
+h3 { font-size: 1.2em; }
+
+/* .text-orange-600/.text-green-600 (higher specificity than a bare `h2`)
+   would otherwise repaint these section labels accent-red/green. */
+h2.text-orange-600, h2.text-green-600, h2.text-blue-600 {
+    color: var(--tufte-ink) !important;
+}
+
+/* --------------------------------------------------------------------------
+   Navigation bar
+   -------------------------------------------------------------------------- */
+
+nav.bg-white {
+    background-color: var(--tufte-bg) !important;
+    border-bottom: 1px solid var(--tufte-rule);
+}
+
+.nav-pill {
+    color: var(--tufte-muted);
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+.nav-pill:hover {
+    color: var(--tufte-accent) !important;
+    background: transparent !important;
+    transform: none !important;
+}
+
+.nav-pill.active,
+html.dark .nav-pill.active {
+    color: var(--tufte-ink) !important;
+    background: transparent !important;
+    font-weight: 600 !important;
+    text-decoration: underline;
+}
+
+#search-input, .search-input,
+html.dark #search-input {
+    background-color: transparent !important;
+    border: none !important;
+    border-bottom: 1px solid var(--tufte-rule) !important;
+    color: var(--tufte-ink) !important;
+    border-radius: 0 !important;
+}
+
+#search-input:focus,
+html.dark #search-input:focus {
+    border-bottom-color: var(--tufte-accent) !important;
+}
+
+#search-results,
+html.dark #search-results {
+    background-color: var(--tufte-bg-alt) !important;
+    border: 1px solid var(--tufte-rule) !important;
+    box-shadow: none !important;
+}
+
+#search-results a.search-selected,
+html.dark #search-results a.search-selected,
+html.dark #search-results a:hover {
+    background: var(--tufte-mark) !important;
+}
+
+/* --------------------------------------------------------------------------
+   Buttons
+   -------------------------------------------------------------------------- */
+
+.btn-primary,
+#start-cooking-btn,
+a[href$=".cook"],
+button[onclick*="Theme"], button[onclick*="Shortcuts"],
+.bg-gray-200 {
+    background: transparent !important;
+    background-image: none !important;
+    color: var(--tufte-ink) !important;
+    border: 1px solid var(--tufte-rule) !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    transition: border-color 0.15s, color 0.15s;
+}
+
+.btn-primary:hover,
+#start-cooking-btn:hover,
+a[href$=".cook"]:hover,
+button[onclick*="Theme"]:hover, button[onclick*="Shortcuts"]:hover,
+.bg-gray-200:hover {
+    border-color: var(--tufte-accent) !important;
+    color: var(--tufte-accent) !important;
+    transform: none !important;
+}
+
+#start-cooking-btn svg, a[href$=".cook"] svg,
+button[onclick*="Theme"] svg, button[onclick*="Shortcuts"] svg {
+    color: inherit !important;
+    stroke: currentColor !important;
+}
+
+/* --------------------------------------------------------------------------
+   Recipe cards (index grid)
+   -------------------------------------------------------------------------- */
+
+.recipe-card {
+    border: 1px solid var(--tufte-rule) !important;
+    transition: border-color 0.15s;
+}
+
+.recipe-card:hover {
+    border-color: var(--tufte-accent) !important;
+    transform: none !important;
+}
+
+.recipe-card::before {
+    background: var(--tufte-accent) !important;
+    height: 2px !important;
+}
+
+.recipe-image-placeholder,
+.recipe-card .bg-gradient-to-br {
+    background: var(--tufte-bg-alt) !important;
+    border: 1px solid var(--tufte-rule);
+    color: var(--tufte-muted) !important;
+}
+
+/* --------------------------------------------------------------------------
+   Tags, badges, metadata pills — text-first, Tufte's tag palette
+   -------------------------------------------------------------------------- */
+
+.tag {
+    background: transparent !important;
+    box-shadow: none !important;
+    color: var(--tufte-accent) !important;
+    border-radius: 2px !important;
+    padding: 0 4px !important;
+    font-weight: 400 !important;
+    text-decoration: none;
+}
+
+.tag:hover { text-decoration: underline; }
+
+.ingredient-badge, .cookware-badge, .timer-badge {
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    padding: 0 2px !important;
+    font-weight: 600 !important;
+}
+
+.ingredient-badge { color: var(--tufte-tag-rust) !important; }
+.cookware-badge   { color: var(--tufte-tag-moss) !important; }
+.timer-badge      { color: var(--tufte-tag-slate) !important; }
+
+.metadata-pill {
+    background: transparent !important;
+    border: none !important;
+    border-bottom: 1px solid var(--tufte-rule) !important;
+    border-radius: 0 !important;
+    color: var(--tufte-muted) !important;
+    font-family: var(--tufte-font-ui);
+    font-size: 0.8em;
+}
+
+/* --------------------------------------------------------------------------
+   Ingredients / cookware / step lists — flat rows on hairline rules,
+   no card chrome, no colored circles
+   -------------------------------------------------------------------------- */
+
+ul.space-y-3 > li, ul.cookware-list > li {
+    background: transparent !important;
+    border-radius: 0 !important;
+    border-bottom: 1px solid var(--tufte-rule) !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+ol.space-y-4 > li {
+    background: transparent !important;
+    border-radius: 0 !important;
+    border-top: 1px solid var(--tufte-rule) !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+ol.space-y-4 > li:first-child { border-top: none !important; }
+
+.step-number {
+    background: transparent !important;
+    color: var(--tufte-ink) !important;
+    font-family: var(--tufte-font-text);
+    font-style: normal;
+    font-weight: 600;
+    width: auto !important;
+    height: auto !important;
+    box-shadow: none !important;
+}
+
+.step-number::after { content: "."; }
+
+/* The "note" callout at the end of a recipe */
+li.border-blue-400 {
+    border-left: 2px solid var(--tufte-accent) !important;
+    background: var(--tufte-bg-alt) !important;
+}
+
+/* --------------------------------------------------------------------------
+   Breadcrumb, footer
+   -------------------------------------------------------------------------- */
+
+.breadcrumb, .breadcrumb a {
+    color: var(--tufte-muted) !important;
+}
+
+footer, footer a {
+    color: var(--tufte-faint) !important;
+    font-family: var(--tufte-font-ui);
+}
+
+footer a:hover { color: var(--tufte-accent) !important; }
+
+/* --------------------------------------------------------------------------
+   Theme toggle switch
+   -------------------------------------------------------------------------- */
+
+.theme-toggle {
+    background-color: var(--tufte-rule) !important;
+}
+
+.theme-toggle.dark {
+    background-color: var(--tufte-accent) !important;
+}
+
+.theme-toggle-handle {
+    background-color: var(--tufte-bg) !important;
+}
+
+/* --------------------------------------------------------------------------
+   Cooking mode overlay — loaded after this file, so needs !important to win
+   -------------------------------------------------------------------------- */
+
+.cooking-overlay {
+    background: var(--tufte-bg) !important;
+    color: var(--tufte-ink) !important;
+    font-family: var(--tufte-font-text) !important;
+}
+
+.cooking-header {
+    background: var(--tufte-bg-alt) !important;
+    border-bottom: 1px solid var(--tufte-rule);
+}
+
+.cooking-header-title { color: var(--tufte-ink) !important; }
+
+.cooking-section-pill {
+    background: transparent !important;
+    color: var(--tufte-muted) !important;
+    border: 1px solid var(--tufte-rule) !important;
+    border-radius: 0 !important;
+}
+
+.cooking-section-pill.active {
+    background: transparent !important;
+    color: var(--tufte-accent) !important;
+    border-color: var(--tufte-accent) !important;
+}
+
+.cooking-close-btn, .cooking-done-close-btn {
+    background: transparent !important;
+    color: var(--tufte-ink) !important;
+    border: 1px solid var(--tufte-rule) !important;
+    border-radius: 0 !important;
+}
+
+.cooking-close-btn:hover, .cooking-done-close-btn:hover {
+    border-color: var(--tufte-accent) !important;
+    color: var(--tufte-accent) !important;
+    opacity: 1 !important;
+}
+
+.cooking-card {
+    border-radius: 0 !important;
+}
+
+.cooking-card-section, .cooking-card-step, .cooking-card-done {
+    background: var(--tufte-bg-alt) !important;
+    border: 1px solid var(--tufte-rule) !important;
+}
+
+.cooking-card-section h2 {
+    background: none !important;
+    -webkit-background-clip: unset !important;
+    -webkit-text-fill-color: var(--tufte-ink) !important;
+    color: var(--tufte-ink) !important;
+    font-family: var(--tufte-font-text);
+    font-size: 1.6em;
+    font-variant: normal;
+    letter-spacing: normal;
+    border-bottom: none;
+}
+
+.cooking-card-done h2 { color: var(--tufte-ink) !important; font-family: var(--tufte-font-text); }
+.cooking-card-done p { color: var(--tufte-muted) !important; }
+
+.cooking-mise-item {
+    background: transparent !important;
+    border-bottom: 1px solid var(--tufte-rule) !important;
+    border-radius: 0 !important;
+}
+
+.cooking-mise-name { color: var(--tufte-ink) !important; }
+.cooking-mise-note { color: var(--tufte-muted) !important; }
+.cooking-mise-qty { color: var(--tufte-accent) !important; }
+
+.cooking-step-text { color: var(--tufte-ink) !important; }
+.cooking-step-ingredients { color: var(--tufte-muted) !important; border-top-color: var(--tufte-rule) !important; }
+
+.cooking-progress { background: var(--tufte-rule) !important; }
+.cooking-progress-bar { background: var(--tufte-accent) !important; }
