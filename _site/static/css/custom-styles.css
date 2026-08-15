@@ -8,10 +8,7 @@
    into place after each build. Run ./rebuild-site.sh instead of
    `cook build web` directly.
 
-   Two deliberate departures from the vault's exact values, per feedback on
-   the first pass — the vault stays the source of truth for the palette and
-   font stack, but this file leans harder into the print-Tufte restraint
-   that inspired it than the Obsidian theme's own UI needs called for:
+   Deliberate departures from the vault's exact values:
 
    - Headings are roman, not italic. The Obsidian theme italicizes h1-h6
      (--h1-style etc.) because in a note-taking UI the H1 doubles as a
@@ -19,64 +16,66 @@
      tufte-css reserve italics for emphasis, epigraphs, and captions —
      titles and section labels are roman. On a recipe page, "Ingredients"
      as a section label is closer to that second case.
-   - --tufte-accent (the Tufte red) is spent only where the vault itself
-     spends it: links on hover, tags, focus rings — never on headings,
-     step numbers, or section labels. Grounds for this are in the vault's
-     own comments (theme.css, of --collapse-icon-color-collapsed: "red
-     spent on a routine state" is explicitly what the palette avoids).
+   - --tufte-accent is spent sparingly — links on hover, tags, focus rings —
+     never on headings, step numbers, or section labels, so it stays a
+     signal rather than decoration.
+   - Palette is navy/grey with silver text rather than the vault's cream
+     paper and red accent — an older, more restrained officer's-desk feel
+     instead of a warm print-book one. Body copy is Gill Sans; the title
+     keeps the Tufte serif (ETBembo/et-book) for a refined but legible
+     masthead.
    ========================================================================== */
 
 @import url("et-book-fonts.css");
-@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400&display=swap");
 
 :root {
-    --tufte-bg:         #fbf8ef;
-    --tufte-bg-alt:     #f3efe1;
-    --tufte-ink:        #111111;
-    --tufte-muted:      #555555;
-    --tufte-muted-warm: #6d6755;
-    --tufte-faint:      #6f6f6f;
-    --tufte-rule:       #cfc9b8;
-    --tufte-accent:     #a00000;
-    --tufte-link:       #1a1a1a;
-    --tufte-code-bg:    #f0f0e8;
-    --tufte-mark:       rgba(213, 106, 118, 0.20);
+    --tufte-bg:         #eef0f3;
+    --tufte-bg-alt:     #e2e5eb;
+    --tufte-ink:        #1b2a41;
+    --tufte-muted:      #6b7280;
+    --tufte-muted-warm: #6b7280;
+    --tufte-faint:      #8a919c;
+    --tufte-rule:       #c7ccd6;
+    --tufte-accent:     #3a5a8c;
+    --tufte-link:       #1b2a41;
+    --tufte-code-bg:    #e2e5eb;
+    --tufte-mark:       rgba(58, 90, 140, 0.16);
 
-    --tufte-tag-slate: #2d4a63;
-    --tufte-tag-moss:  #35603f;
-    --tufte-tag-ochre: #6b5a26;
-    --tufte-tag-plum:  #5b3a6b;
-    --tufte-tag-teal:  #1f5f5b;
-    --tufte-tag-rust:  #784a30;
+    --tufte-tag-slate: #3a5a8c;
+    --tufte-tag-moss:  #4c6b5a;
+    --tufte-tag-ochre: #7a6a4a;
+    --tufte-tag-plum:  #5c5670;
+    --tufte-tag-teal:  #3f6d72;
+    --tufte-tag-rust:  #7a5a4a;
 
-    /* Body copy is Lato — traditional and legible, not techy. The Tufte
-       serif (ETBembo/et-book) is reserved for the page/recipe title (h1)
-       only, via --tufte-font-title. */
-    --tufte-font-text:  "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    /* Body copy is Gill Sans — an older, humanist sans that reads as
+       refined rather than techy. The serif (ETBembo/et-book) is reserved
+       for the page/recipe title (h1) only, via --tufte-font-title. */
+    --tufte-font-text:  "Gill Sans", "Gill Sans MT", "Seravek", "Trebuchet MS", Calibri, sans-serif;
     --tufte-font-title: "ETBembo", "et-book", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
     --tufte-font-ui:    "Gill Sans", "Gill Sans MT", "Seravek", "Trebuchet MS", Calibri, sans-serif;
     --tufte-font-mono:  "Consolas", "Liberation Mono", Menlo, Courier, monospace;
 }
 
 html.dark {
-    --tufte-bg:         #151515;
-    --tufte-bg-alt:     #1c1c1c;
-    --tufte-ink:        #e8e6d9;
-    --tufte-muted:      #a59f8c;
-    --tufte-muted-warm: #a59f8c;
-    --tufte-faint:      #908b7a;
-    --tufte-rule:       #3a3a36;
-    --tufte-accent:     #d97474;
-    --tufte-link:       #e8e6d9;
-    --tufte-code-bg:    #232320;
-    --tufte-mark:       rgba(213, 106, 118, 0.15);
+    --tufte-bg:         #10182b;
+    --tufte-bg-alt:     #182238;
+    --tufte-ink:        #c7cdd6;
+    --tufte-muted:      #9098a3;
+    --tufte-muted-warm: #9098a3;
+    --tufte-faint:      #74808f;
+    --tufte-rule:       #2b3650;
+    --tufte-accent:     #8fb0da;
+    --tufte-link:       #c7cdd6;
+    --tufte-code-bg:    #182238;
+    --tufte-mark:       rgba(143, 176, 218, 0.15);
 
-    --tufte-tag-slate: #8fb4d1;
-    --tufte-tag-moss:  #8fbf95;
-    --tufte-tag-ochre: #c9b077;
-    --tufte-tag-plum:  #b299c4;
-    --tufte-tag-teal:  #7fc2bc;
-    --tufte-tag-rust:  #c99b7d;
+    --tufte-tag-slate: #8fb0da;
+    --tufte-tag-moss:  #93b5a0;
+    --tufte-tag-ochre: #c2ad84;
+    --tufte-tag-plum:  #ada6c4;
+    --tufte-tag-teal:  #8fc2c6;
+    --tufte-tag-rust:  #c2a58f;
 }
 
 /* --------------------------------------------------------------------------
@@ -342,6 +341,19 @@ button[onclick*="Theme"]:hover, button[onclick*="Shortcuts"]:hover,
 button[onclick*="Theme"] svg, button[onclick*="Shortcuts"] svg {
     color: inherit !important;
     stroke: currentColor !important;
+}
+
+/* The generator marks this button `text-white`, which in dark mode
+   (`html.dark .text-white`) outranks the plain `a[href$=".cook"]` rule
+   above on specificity and paints the label the same color as the page
+   background — invisible. Match that specificity to win back the ink
+   color. */
+html.dark .btn-primary,
+html.dark #start-cooking-btn,
+html.dark a[href$=".cook"],
+html.dark button[onclick*="Theme"], html.dark button[onclick*="Shortcuts"],
+html.dark .bg-gray-200 {
+    color: var(--tufte-ink) !important;
 }
 
 /* --------------------------------------------------------------------------
