@@ -29,24 +29,24 @@
 @import url("et-book-fonts.css");
 
 :root {
-    --tufte-bg:         #eef0f3;
-    --tufte-bg-alt:     #e2e5eb;
-    --tufte-ink:        #1b2a41;
-    --tufte-muted:      #6b7280;
-    --tufte-muted-warm: #6b7280;
-    --tufte-faint:      #8a919c;
-    --tufte-rule:       #c7ccd6;
-    --tufte-accent:     #3a5a8c;
-    --tufte-link:       #1b2a41;
-    --tufte-code-bg:    #e2e5eb;
-    --tufte-mark:       rgba(58, 90, 140, 0.16);
+    --tufte-bg:         #f8f6f1;
+    --tufte-bg-alt:     #efece3;
+    --tufte-ink:        #17233d;
+    --tufte-muted:      #5c5f6a;
+    --tufte-muted-warm: #5c5f6a;
+    --tufte-faint:      #83828b;
+    --tufte-rule:       #ddd8ca;
+    --tufte-accent:     #2d4d7a;
+    --tufte-link:       #17233d;
+    --tufte-code-bg:    #efece3;
+    --tufte-mark:       rgba(45, 77, 122, 0.16);
 
-    --tufte-tag-slate: #3a5a8c;
-    --tufte-tag-moss:  #4c6b5a;
-    --tufte-tag-ochre: #7a6a4a;
-    --tufte-tag-plum:  #5c5670;
-    --tufte-tag-teal:  #3f6d72;
-    --tufte-tag-rust:  #7a5a4a;
+    --tufte-tag-slate: #2d4d7a;
+    --tufte-tag-moss:  #43604e;
+    --tufte-tag-ochre: #745f38;
+    --tufte-tag-plum:  #574d68;
+    --tufte-tag-teal:  #33636a;
+    --tufte-tag-rust:  #79523a;
 
     /* Body copy is Gill Sans — an older, humanist sans that reads as
        refined rather than techy. The serif (ETBembo/et-book) is reserved
@@ -254,6 +254,17 @@ nav.bg-white {
     width: 100vw;
     margin-left: calc(50% - 50vw) !important;
     margin-right: calc(50% - 50vw) !important;
+    margin-top: 0 !important;
+}
+
+/* .viewport's own top margin (set in the generator's inline <style>,
+   2-3rem depending on breakpoint) leaves a gap above the nav's natural
+   flow position before any scrolling happens, so a "sticky" nav doesn't
+   actually start flush with the window edge — it only glues once you've
+   scrolled past that gap. Zero it out; the nav's own padding already
+   gives the page breathing room. */
+.viewport {
+    margin-top: 0 !important;
 }
 
 /* Masthead. The generator's mascot icon reads as app chrome, not a
