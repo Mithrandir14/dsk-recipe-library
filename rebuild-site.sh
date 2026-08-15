@@ -18,13 +18,15 @@ Veggie Lasagna.cook
 Charred Salsa Verde.cook
 Peach, Cucumber and Mozzarella Salad With Gochujang Vinaigrette.cook
 Roasted Tomato Tart With Ricotta and Pesto.cook
+To try/Pasta with Saffron, Corn, and Harissa Breadcrumbs.cook
 "
 
 STAGING=$(mktemp -d)
 trap 'rm -rf "$STAGING"' EXIT
 echo "$PUBLISHED" | while IFS= read -r recipe; do
   [ -z "$recipe" ] && continue
-  cp "$recipe" "$STAGING/"
+  mkdir -p "$STAGING/$(dirname "$recipe")"
+  cp "$recipe" "$STAGING/$recipe"
 done
 
 rm -rf _site

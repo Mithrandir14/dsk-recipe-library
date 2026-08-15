@@ -244,22 +244,43 @@ nav.bg-white {
     border-bottom: 1px solid var(--tufte-rule);
 }
 
-/* The generator's CookLang mascot icon reads as app chrome, not a
-   masthead — drop it rather than re-skin it. */
+/* Masthead. The generator's mascot icon reads as app chrome, not a
+   masthead, so it stays hidden; a text wordmark takes its place via
+   generated content — this file only overrides the CSS the generator
+   loads (see the file header), it has no hook into the page markup
+   itself, so injecting the title has to happen without new elements. */
 nav img[src*="android-chrome"] {
     display: none !important;
 }
 
-/* Keep the search field modest rather than letting it dominate the bar */
-#search-container {
-    flex: initial !important;
-    width: 100% !important;
+nav .order-1 {
+    display: flex !important;
+    align-items: center;
 }
 
-@media (min-width: 768px) {
-    #search-container {
-        max-width: 22em;
-    }
+nav .order-1::after {
+    content: "Akshayapatra";
+    font-family: var(--tufte-font-title);
+    font-size: 1.5em;
+    letter-spacing: 0.02em;
+    color: inherit;
+    white-space: nowrap;
+}
+
+/* Search collapses to just its icon until focused, then expands in place.
+   Keeps the bar's visual weight on the title rather than a wide input
+   sitting front and center; margin-left: auto pushes it (and the nav
+   links/buttons that follow it in source order) over to the right edge. */
+#search-container {
+    flex: 0 0 auto !important;
+    margin-left: auto !important;
+    width: 2.5rem !important;
+    overflow: hidden;
+    transition: width 0.2s ease;
+}
+
+#search-container:focus-within {
+    width: 20em !important;
 }
 
 .nav-pill {
