@@ -239,9 +239,21 @@ h2.text-orange-600, h2.text-green-600, h2.text-blue-600 {
    Navigation bar
    -------------------------------------------------------------------------- */
 
+/* The generator centers everything (nav included) inside a `.viewport`
+   div capped at 72rem with side padding, so a plain-width nav reads as
+   just another content block instead of a masthead. Break it out to the
+   full window width and pin it through scroll — the "50% minus 50vw"
+   margin trick spans the viewport regardless of the parent's max-width
+   and padding, without needing to touch the generated markup. */
 nav.bg-white {
     background-color: var(--tufte-bg) !important;
     border-bottom: 1px solid var(--tufte-rule);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    width: 100vw;
+    margin-left: calc(50% - 50vw) !important;
+    margin-right: calc(50% - 50vw) !important;
 }
 
 /* Masthead. The generator's mascot icon reads as app chrome, not a
@@ -384,6 +396,18 @@ html.dark .bg-gray-200 {
 .recipe-card {
     border: 1px solid var(--tufte-rule) !important;
     transition: border-color 0.15s;
+}
+
+/* The generator marks card titles `font-bold`, a class which (same
+   specificity as our plain `h3` rule, later in its stylesheet) wins the
+   bold Gill Sans back — reading as a generic web-app card label next to
+   the serif "All Recipes"/page-title masthead. Match the specificity to
+   put these back in the same serif, roman weight, as the rest of the
+   site's real headings. */
+.recipe-card h3 {
+    font-family: var(--tufte-font-title) !important;
+    font-weight: 400 !important;
+    font-size: 1.3em;
 }
 
 .recipe-card:hover {
