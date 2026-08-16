@@ -43,3 +43,10 @@ echo "Applied favicon set to _site/static/"
 
 find _site -name '*.html' -exec sed -i '' "s/ - Cook<\/title>/ - $SITE_NAME<\/title>/" {} +
 echo "Retitled browser tabs to \"$SITE_NAME\""
+
+# The static build ships timer badges as inert text (no click-to-start —
+# that only exists in the dynamic `cook server` app). Append the missing
+# behavior onto the generator's own keyboard-shortcuts.js, which every
+# page already loads, rather than editing any generated HTML.
+cat theme/timer.js >> _site/static/js/keyboard-shortcuts.js
+echo "Appended click-to-start timers to _site/static/js/keyboard-shortcuts.js"

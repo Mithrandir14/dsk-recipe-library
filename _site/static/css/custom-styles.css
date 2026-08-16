@@ -467,6 +467,32 @@ html.dark .bg-gray-200 {
 .cookware-badge   { color: var(--tufte-tag-moss) !important; }
 .timer-badge      { color: var(--tufte-tag-slate) !important; }
 
+/* Click-to-start timer states — see theme/timer.js, which is appended
+   onto the generator's own keyboard-shortcuts.js since the static build
+   ships the badge as inert text with no click behavior at all. */
+.timer-badge-clickable {
+    cursor: pointer;
+    border-bottom: 1px dotted var(--tufte-tag-slate);
+}
+
+.timer-badge-clickable.timer-running {
+    color: var(--tufte-accent) !important;
+    border-bottom-style: solid;
+    border-bottom-color: var(--tufte-accent);
+}
+
+.timer-badge-clickable.timer-done {
+    color: var(--tufte-accent) !important;
+    border-bottom-style: solid;
+    border-bottom-color: var(--tufte-accent);
+    animation: timer-pulse 1s ease-in-out infinite;
+}
+
+@keyframes timer-pulse {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0.35; }
+}
+
 .metadata-pill {
     background: transparent !important;
     border: none !important;
